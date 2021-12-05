@@ -43,9 +43,39 @@ const createTecnology = async (req, res) => {
   }
 };
 
-const updateTecnologyById = async () => {};
+const updateTecnologyById = async (req, res) => {
 
-const deleteTecnologyById = async () => {};
+    const { nombre, description,tipo } = req.body
+    const { id } = req.params
+    
+    if(!id) {
+        return res.status(400).send({
+            message: "id content can not be empty"
+        });
+    }
+    Tecnologia.findByIdAndUpdate(id,{
+        nombre: nombre,
+        description: description,
+        tipo: tipo
+    },{new:true}, () =>{
+        res.send('Tecnología con id: '+ req.params.id+' actualizada')})
+        .catch((err) => {
+        res.status(500).send({
+            message:
+            err.message ||
+            "Algun error ocurrio mientras se actualizaba la tecnologia.",
+            });
+        });
+};
+
+const deleteTecnologyById = async (req, res) => {
+    
+    Tecnologia.findByIdAndRemove(req.params.id).then(()=>{
+        res.send({message:'Tecnologia eliminada'})
+    }).catch(err=>{
+        res.send({message:'Error al eliminar la tecnología'})
+    })
+};
 
 module.exports = {
   getAllTecnology,
