@@ -1,0 +1,8 @@
+const path = require("path");
+
+module.exports = {
+  config: path.resolve("db/postgres", "postgres.js"),
+  "models-path": path.resolve("db/postgres", "models"),
+  "seeders-path": path.resolve("db/postgres", "seeders"),
+  "migrations-path": path.resolve("db/postgres", "migrations"),
+};
