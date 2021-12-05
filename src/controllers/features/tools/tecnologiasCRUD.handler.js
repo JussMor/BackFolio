@@ -58,7 +58,7 @@ const updateTecnologyById = async (req, res) => {
         description: description,
         tipo: tipo
     },{new:true}, () =>{
-        res.send('Tecnología con id: '+ req.params.id+' actualizada')})
+        res.send('Tecnología con id: '+ req.params.id+' actualizada')}).clone()
         .catch((err) => {
         res.status(500).send({
             message:
@@ -76,6 +76,7 @@ const deleteTecnologyById = async (req, res) => {
         res.send({message:'Error al eliminar la tecnología'})
     })
 };
+
 
 module.exports = {
   getAllTecnology,
