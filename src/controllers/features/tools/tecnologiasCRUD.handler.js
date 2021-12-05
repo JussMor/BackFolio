@@ -2,6 +2,7 @@
 const Tecnologia = require("../../../../db/mongo/models/Tecnologia");
 
 const getAllTecnology = async (req, res) => {
+  //{tipo:2} esto es una query
   Tecnologia.find()
     .then((tecnologia) => {
       res.send(tecnologia);
