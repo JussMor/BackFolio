@@ -4,6 +4,10 @@ const express = require("express");
 const logger = require("morgan");
 // const decodeIDToken = require('./middlewares/auth/firebase.middleware')
 const apiRouter = require("./routes/index.routes");
+const { mongodb } = require("../db/mongo/mongo")
+
+//coneccion a MongoDB
+mongodb()
 
 const PORT = process.env.PORT || 3000;
 const app = express();
