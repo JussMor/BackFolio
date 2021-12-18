@@ -1,6 +1,23 @@
 //Tools are a crud with mongoDB
 const Tecnologia = require("../../../../db/mongo/models/Tecnologia");
 
+const getOneTecnology = async (req, res)=> {
+
+  const { id } = req.params
+    
+  if(!id) {
+      return res.status(400).send({
+          message: "id content can not be empty"
+      });
+  }
+  Tecnologia.findById(id).then((tecnologia) => {
+    res.send(tecnologia);
+  })
+  .catch((err) => {
+    res.send(err);
+  });
+}
+
 const getAllTecnology = async (req, res) => {
   //{tipo:2} esto es una query
   Tecnologia.find()
@@ -54,12 +71,13 @@ const updateTecnologyById = async (req, res) => {
             message: "id content can not be empty"
         });
     }
-    Tecnologia.findByIdAndUpdate(id,{
+    try {
+      Tecnologia.findByIdAndUpdate(id,{
         nombre: nombre,
         description: description,
         tipo: tipo
     },{new:true}, () =>{
-        res.send('Tecnología con id: '+ req.params.id+' actualizada')}).clone()
+        res.json('Tecnología con id: '+ req.params.id+' actualizada')}).clone()
         .catch((err) => {
         res.status(500).send({
             message:
@@ -67,6 +85,10 @@ const updateTecnologyById = async (req, res) => {
             "Algun error ocurrio mientras se actualizaba la tecnologia.",
             });
         });
+    }
+    catch (error) {
+        console.log(error);
+    }
 };
 
 const deleteTecnologyById = async (req, res) => {
@@ -84,4 +106,5 @@ module.exports = {
   createTecnology,
   updateTecnologyById,
   deleteTecnologyById,
+  getOneTecnology,
 };

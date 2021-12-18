@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const  tecnologyHandler  = require("../../../controllers/features/tools/tecnologiasCRUD.handler")
 
+router.get('/tools/:id', tecnologyHandler.getOneTecnology);
 
 router.get('/tools',tecnologyHandler.getAllTecnology);
 
