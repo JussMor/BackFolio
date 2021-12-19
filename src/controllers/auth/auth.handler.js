@@ -1,3 +1,4 @@
+const admin = require("firebase-admin");
 const createError = require("http-errors");
 const {
   signAccessToken,
@@ -12,8 +13,9 @@ const {
 const client = require("../../../db/redis/redis");
 
 class AuthHandler {
-  static signup(req, res, next) {
-    let userId;
+  static async signup(req, res, next) {
+    // let userId;
+    const {firstName, lastName, email, password} = req.body;
 
     if (!req.body.email) {
       return next(createError(400, "email must be provided."));
@@ -22,45 +24,53 @@ class AuthHandler {
     if (!req.body.password) {
       return next(createError(400, "password must be provided."));
     }
-      // buscar usuario si ya existe
-      user
-      .findOne({ where: { email: req.body.email } })
-      .then((user) => {
-        if (user) {
-          throw createError(401, "Email ya existe.", {
-            reason: "Email found.",
-          });
-        }
-      })
-      .catch((err) => next(createError(500, err)));
+
+    const user  = await admin.auth().createUser({
+      displayName: `${firstName} ${lastName}`,
+      email,
+      password,
+    });
+
+    return res.send(user);
+      // // buscar usuario si ya existe
+      // user
+      // .findOne({ where: { email: req.body.email } })
+      // .then((user) => {
+      //   if (user) {
+      //     throw createError(401, "Email ya existe.", {
+      //       reason: "Email found.",
+      //     });
+      //   }
+      // })
+      // .catch((err) => next(createError(500, err)));
 
 
-       //crear usuario
-      user
-        .create(req.body, {
-          fields: ["firstName", "lastName", "email", "password"],
-        })
-        .then((user) => user.toJSON())
-        .then((user) => {
-          delete user.password;
+      //  //crear usuario
+      // user
+      //   .create(req.body, {
+      //     fields: ["firstName", "lastName", "email", "password"],
+      //   })
+      //   .then((user) => user.toJSON())
+      //   .then((user) => {
+      //     delete user.password;
 
-          userId = user.id;
-          console.log(userId)
+      //     userId = user.id;
+      //     console.log(userId)
 
-          const accessToken = signAccessToken(userId);
-          const refreshToken = signRefreshToken(userId);
+      //     const accessToken = signAccessToken(userId);
+      //     const refreshToken = signRefreshToken(userId);
 
-          res.status(201).json({
-            status: "success",
-            data:{accessToken,refreshToken, user },
-          });
-        })
-        .catch((err) => {
-          if (err instanceof ValidationError) {
-            return next(createError(400, err));
-          }
-          next(createError(500, err));
-        });
+      //     res.status(201).json({
+      //       status: "success",
+      //       data:{accessToken,refreshToken, user },
+      //     });
+      //   })
+      //   .catch((err) => {
+      //     if (err instanceof ValidationError) {
+      //       return next(createError(400, err));
+      //     }
+      //     next(createError(500, err));
+      //   });
 
   }
 

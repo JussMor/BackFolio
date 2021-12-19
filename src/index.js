@@ -3,7 +3,7 @@ const createError = require("http-errors");
 const express = require("express");
 const logger = require("morgan");
 const cors = require('cors')
-// const decodeIDToken = require('./middlewares/auth/firebase.middleware')
+const decodeIDToken = require('./middlewares/auth/firebase.middleware')
 const apiRouter = require("./routes/index.routes");
 const { mongodb } = require("../db/mongo/mongo")
 
@@ -17,7 +17,7 @@ const app = express();
 app.use(logger("dev"));
 app.use(express.json());
 app.use(cors())
-// app.use(decodeIDToken)
+app.use(decodeIDToken)
 
 //routes
 app.use("/api/v1", apiRouter);

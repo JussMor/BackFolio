@@ -1,3 +1,4 @@
+
 const createError = require("http-errors");
 const {
   user,
@@ -38,6 +39,7 @@ class UserHandler {
   }
 
   static createUser(req, res, next) {
+
     user
       .create(req.body, {
         fields: ["firstName", "lastName", "email", "password"],

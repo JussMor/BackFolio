@@ -20,13 +20,19 @@ const getOneTecnology = async (req, res)=> {
 
 const getAllTecnology = async (req, res) => {
   //{tipo:2} esto es una query
+  const user = req['currentUser'];
+
+  if (!user) { 
+    res.status(403).send('You must be logged in!');
+  }
   Tecnologia.find()
-    .then((tecnologia) => {
-      res.send(tecnologia);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+  .then((tecnologia) => {
+    res.send(tecnologia);
+  })
+  .catch((err) => {
+    res.send(err);
+  });
+  
 };
 
 const createTecnology = async (req, res) => {
