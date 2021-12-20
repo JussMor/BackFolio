@@ -6,7 +6,7 @@ const {verifyAccessToken} = require("../../helpers/token.helpers")
 // get /api/users
 router.get('/', usersHandler.getAll);
 
-// router.post("/", usersHandler.createUser )
+router.post("/", usersHandler.createUser )
 
 router.get("/:id", usersHandler.getUserById)
 
