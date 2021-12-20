@@ -22,16 +22,16 @@ const getAllTecnology = async (req, res) => {
   //{tipo:2} esto es una query
   const user = req['currentUser'];
 
-  if (!user) { 
-    res.status(403).send('You must be logged in!');
+  if (user) { 
+    Tecnologia.find()
+    .then((tecnologia) => {
+      res.send(tecnologia);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
   }
-  Tecnologia.find()
-  .then((tecnologia) => {
-    res.send(tecnologia);
-  })
-  .catch((err) => {
-    res.send(err);
-  });
+  res.status(403).send('You must be logged in!');
   
 };
 
