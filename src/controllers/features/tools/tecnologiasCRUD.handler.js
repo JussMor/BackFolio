@@ -112,5 +112,5 @@ module.exports = {
   createTecnology,
   updateTecnologyById,
   deleteTecnologyById,
-  getOneTecnology,
+  getOneTecnology, 
 };
