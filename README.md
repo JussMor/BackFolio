@@ -32,3 +32,25 @@ GET:     /api/v1/users/:id<br>
 POST:    /api/v1/users<br>
 PUT:     /api/v1/users/:id<br>
 DELETE:  /api/v1/users/:id<br>
+
+<h2>TECHNOLOGY</h2>
+<br>
+<p>Estas rutas estan usando Mongo como base de datos</p>
+<br>
+GET:   /api/v1/feature/tools<br>
+GET:   api/v1/feature/tools/:id (Esta rutas esta protegida gracias a firebase que puede ser usado en el backend para hacer validaciones.)<br>
+<br>
+<p>En este punto te invito a ir a mi proyecto Fronfolio  para que puedas ver como esta integrada esta ruta y visitar mi sitio web https://fronfolio.herokuapp.com/</p>
+<br>
+POST:  /api/v1/feature/tools<br>
+PUT:   /api/v1/feature/tools/:id/edit<br>
+DELETE: /api/v1/feature/tools/:id/delete<br>
+<br>
+<h2>AUTH</h2>
+<br>
+<p>Estas rutas son de login y usa redis para almacenar el jwt, la ruta signup crea un usuario y lo almacena tanto en postres como en firebase auth</p>
+<br>
+POST: /api/v1/auth/signin (Logea usuario en firebase)<br> 
+POST: /api/v1/auth/signup (Crea usuario Postgres y Firebase)<br>
+POST: /api/v1/auth/refresh-token <br>
+DELETE: /api/v1/auth/logout <br>
