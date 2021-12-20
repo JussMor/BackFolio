@@ -22,8 +22,12 @@ const getAllTecnology = async (req, res) => {
   //{tipo:2} esto es una query
   const user = req['currentUser'];
 
-  if (user) { 
-    Tecnologia.find()
+  if (!user) { 
+    res.status(403).send('You must be logged in!');
+    
+  }
+  if(user){
+    return Tecnologia.find()
     .then((tecnologia) => {
       res.send(tecnologia);
     })
@@ -31,7 +35,6 @@ const getAllTecnology = async (req, res) => {
       res.send(err);
     });
   }
-  res.status(403).send('You must be logged in!');
   
 };
 
